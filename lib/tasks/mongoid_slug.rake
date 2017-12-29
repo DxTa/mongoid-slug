@@ -4,7 +4,7 @@ namespace :mongoid_slug do
     ::Rails.application.eager_load! if defined?(Rails)
     klasses = Module.constants.find_all do |const|
       next if const == :MissingSourceFile
-      const != const.upcase ? Mongoid::Slug > (Object.const_get const) : nil
+      const != const.upcase ? (Mongoid::Slug > (Object.const_get const) rescue nil) : nil
     end
     klasses.map! { |klass| klass.to_s.constantize }
     unless klasses.blank?
